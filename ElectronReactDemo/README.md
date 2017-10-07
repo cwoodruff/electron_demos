@@ -1,2 +1,5 @@
 # electronreactdemo
-just a demo for electron and reactjs
+
+Generated from the Yeoman generator -- generator-react-electron
+
+https://github.com/ZaninAndrea/generator-react-electron
