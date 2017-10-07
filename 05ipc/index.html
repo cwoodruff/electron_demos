@@ -19,7 +19,12 @@
             function sendMessage() {
                 ipcRenderer.send('asynchronous-message', 'Hello DevSum from Main!!');
             }
+            function closeApp() {
+                ipcRenderer.send('close-main-window');
+            }
         </script>
         <input value="Send Message" type="submit" onclick="sendMessage();"></input>
+        <br/>
+        <input value="Close App" type="submit" onclick="closeApp();"></input>
     </body>
 </html>

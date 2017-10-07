@@ -17,7 +17,7 @@ function createMainWindow() {
 
 	mainWindow.loadURL(`file://${__dirname}/index.html`);
 
-	mainWindow.webContents.openDevTools();
+	//mainWindow.webContents.openDevTools();
 
 	let settingsWindow;
 
@@ -187,10 +187,15 @@ ipcMain.on('synchronous-message', function(event, arg) {
   event.returnValue = 'pong';
 });
 
+ipcMain.on('close-main-window', function (event, arg) {
+    console.log("Close App");
+    app.quit();
+});
+
 app.on('ready', createMainWindow);
 
 app.on('window-all-closed', () => {
-	if (process.platform !== 'darwin') {
-		app.quit();
-	}
+    if (process.platform !== 'darwin') {
+    app.quit();
+}
 });
