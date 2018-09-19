@@ -17,6 +17,9 @@
         function closeApp() {
             ipcRenderer.send('close-main-window');
         }
+        ipcRenderer.on('asynchronous-reply', function(event, arg) {
+            console.log(arg);
+        });
     </script>
     <input value="Send Message" type="submit" onclick="sendMessage();"></input>
     <br/>

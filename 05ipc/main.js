@@ -179,6 +179,7 @@ function createMainWindow() {
 
 ipcMain.on('asynchronous-message', function (event, arg) {
 	console.log(arg);
+    event.sender.send('asynchronous-reply', 'pong');
 });
 
 ipcMain.on('synchronous-message', function(event, arg) {
