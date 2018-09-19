@@ -179,12 +179,11 @@ function createMainWindow() {
 
 ipcMain.on('asynchronous-message', function (event, arg) {
 	console.log(arg);
-	remoteWindow.webContents.send('asynchronous-reply', arg);
 });
 
 ipcMain.on('synchronous-message', function(event, arg) {
   console.log(arg);
-  event.returnValue = 'pong';
+  event.returnValue = 'received';
 });
 
 ipcMain.on('close-main-window', function (event, arg) {
