@@ -10,10 +10,18 @@
     <h1>IPC Remote</h1>
     <script>
         const ipcRenderer = require('electron').ipcRenderer;
-        ipcRenderer.on('asynchronous-reply', function (event, arg) {
-            console.log(arg); // prints "pong"
-        });
+        console.log(ipcRenderer.sendSync('synchronous-message', 'ping'));
+        ipcRenderer.send('asynchronous-message', 'Hello from Remote Window on Start!');
+        function sendMessage() {
+            ipcRenderer.send('asynchronous-message', 'Hello DevSum from Remote!!');
+        }
+        function closeApp() {
+            ipcRenderer.send('close-main-window');
+        }
     </script>
+    <input value="Send Message" type="submit" onclick="sendMessage();"></input>
+    <br/>
+    <input value="Close App" type="submit" onclick="closeApp();"></input>
 </body>
 
 </html>
