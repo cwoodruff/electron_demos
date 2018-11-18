@@ -177,13 +177,13 @@ function createMainWindow() {
 		});
 }
 
-ipcMain.on('asynchronous-message', function (event, arg) {
-	console.log(arg);
-    event.sender.send('asynchronous-reply', 'pong');
+ipcMain.on('asynchronous-message', function (event, args) {
+	console.log(args);
+    mainWindow.send('asynchronous-reply', { result: true });
 });
 
-ipcMain.on('synchronous-message', function(event, arg) {
-  console.log(arg);
+ipcMain.on('synchronous-message', function(event, args) {
+  console.log(args);
   event.returnValue = 'received';
 });
 

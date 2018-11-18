@@ -14,10 +14,13 @@
 
         <script>
             const ipcRenderer = require('electron').ipcRenderer;
-            ipcRenderer.send('asynchronous-message', 'Hello from Main Window on Start!');
+            ipcRenderer.send('asynchronous-message', 'Hello from Renderer on Start!');
             function sendMessage() {
-                ipcRenderer.send('asynchronous-message', 'Hello DevSum from Main!!');
+                ipcRenderer.send('asynchronous-message', 'Hello from Renderer!!');
             }
+            ipcRenderer.on('asynchronous-reply', (event, args) => {
+                console.log({event, args});
+            });
             function closeApp() {
                 ipcRenderer.send('close-main-window');
             }

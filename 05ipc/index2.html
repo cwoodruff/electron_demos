@@ -10,9 +10,9 @@
     <h1>IPC Remote</h1>
     <script>
         const ipcRenderer = require('electron').ipcRenderer;
-        ipcRenderer.send('asynchronous-message', 'Hello from Remote Window on Start!');
+        ipcRenderer.send('asynchronous-message', 'Hello from Remote Window 2 on Start!');
         function sendMessage() {
-            ipcRenderer.send('asynchronous-message', 'Hello DevSum from Remote!!');
+            ipcRenderer.send('asynchronous-message', 'Hello from Remote 2!!');
         }
         function closeApp() {
             ipcRenderer.send('close-main-window');
