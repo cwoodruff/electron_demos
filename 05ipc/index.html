@@ -14,9 +14,9 @@
 
         <script>
             const ipcRenderer = require('electron').ipcRenderer;
-            ipcRenderer.send('asynchronous-message', 'Hello from Renderer on Start!');
+            ipcRenderer.send('asynchronous-message', 'Hello from Main Window on Start!');
             function sendMessage() {
-                ipcRenderer.send('asynchronous-message', 'Hello from Renderer!!');
+                ipcRenderer.send('asynchronous-message', 'Hello from Main Window!!');
             }
             ipcRenderer.on('asynchronous-reply', (event, args) => {
                 console.log({event, args});
