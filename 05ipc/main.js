@@ -1,8 +1,5 @@
-'use strict';
-const electron = require('electron');
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
-const Menu = electron.Menu;
+const { app, BrowserWindow, Menu, dialog } = require('electron')
+const path = require('path')
 const ipcMain = require('electron').ipcMain;
 const ipcRenderer = require('electron').ipcRenderer;
 
@@ -11,13 +8,12 @@ let remoteWindow;
 
 function createMainWindow() {
 	mainWindow = new BrowserWindow({
-		width: 600,
-		height: 400
+		width: 800,
+		height: 600,
+		webPreferences: { nodeIntegration: true, contextIsolation: false, preload: path.join(__dirname, 'preload.js') }
 	});
 
-	mainWindow.loadURL(`file://${__dirname}/index.html`);
-
-	//mainWindow.webContents.openDevTools();
+	mainWindow.loadFile('index.html');
 
 	let settingsWindow;
 
@@ -32,7 +28,7 @@ function createMainWindow() {
 				label: 'Open',
 				accelerator: 'CmdOrCtrl+O',
 				click: () => {
-					electron.dialog.showOpenDialog({
+					dialog.showOpenDialog({
 						properties: ['openFile', 'openDirectory', 'multiSelections']
 					});
 				}
@@ -50,7 +46,7 @@ function createMainWindow() {
 						width: 400
 					}
 					settingsWindow = new BrowserWindow(params)
-					settingsWindow.loadURL('file://' + __dirname + '/settings.html')
+					settingsWindow.loadFile('settings.html')
 				}
 			},
 			{
@@ -123,11 +119,7 @@ function createMainWindow() {
 	let menu = Menu.buildFromTemplate(application_menu);
 	Menu.setApplicationMenu(menu);
 
-	// Emitted when the window is closed.
-	mainWindow.on('closed', function () {
-		// Emitted when the window is closed.
-		// After you have received this event you should remove the reference
-		// to the window and avoid using it anymore.
+	mainWindow.on('closed', function() {
 		mainWindow = null;
 	});
 
@@ -136,7 +128,7 @@ function createMainWindow() {
 	// Calling event.preventDefault() will cancel the close.
 	mainWindow.webContents.on('close', function () {})
 
-	mainWindow.webContents.on('crashed', function () {})
+	mainWindow.webContents.on('render-process-gone', function () {})
 
 	// Emitted when the web page becomes unresponsive.
 	mainWindow.on('unresponsive', function () {})
@@ -171,7 +163,7 @@ function createMainWindow() {
 		});
 
 		remoteWindow.webContents.openDevTools();
-		remoteWindow.loadURL(`file://${__dirname}/index2.html`);
+		remoteWindow.loadFile('index2.html');
 		remoteWindow.on('closed', function () {
 			remoteWindow = null;
 		});
@@ -192,10 +184,18 @@ ipcMain.on('close-main-window', function (event, arg) {
     app.quit();
 });
 
-app.on('ready', createMainWindow);
+app.whenReady().then(() => {
+	createMainWindow()
+
+	app.on('activate', () => {
+		if (BrowserWindow.getAllWindows().length === 0) {
+			createWindow()
+		}
+	})
+})
 
 app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-    app.quit();
-}
+	if (process.platform !== 'darwin') {
+		app.quit()
+	}
 });

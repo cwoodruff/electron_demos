@@ -6,10 +6,9 @@
     "scripts": {
         "start": "electron ."
     },
-    "repository": "https://github.com/cwoodruff/devsum17_electron.git",
     "author": "cwoodruff",
     "license": "MIT",
     "devDependencies": {
-        "electron": "~3.0.10"
+        "electron": "^12.0.7"
     }
 }

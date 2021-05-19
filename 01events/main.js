@@ -1,32 +1,23 @@
-'use strict';
-const electron = require('electron');
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
+const { app, BrowserWindow } = require('electron')
+const path = require('path')
 
 let mainWindow;
 
 function createMainWindow() {
 	mainWindow = new BrowserWindow({
-		width: 600,
-		height: 400
+		width: 800,
+		height: 600,
+		webPreferences: { nodeIntegration: true, contextIsolation: false, preload: path.join(__dirname, 'preload.js') }
 	});
 
-	mainWindow.loadURL(`file://${__dirname}/index.html`);
-
-	// Emitted when the window is closed.
-	mainWindow.on('closed', function () {
-		// Emitted when the window is closed.
-		// After you have received this event you should remove the reference
-		// to the window and avoid using it anymore.
+	mainWindow.loadFile('index.html');
+	mainWindow.on('closed', function() {
 		mainWindow = null;
 	});
 
-	//Emitted when the window is going to be closed.
-	// It's emitted before the beforeunload and unload event of the DOM.
-	// Calling event.preventDefault() will cancel the close.
 	mainWindow.webContents.on('close', function () {})
 
-	mainWindow.webContents.on('crashed', function () {})
+	mainWindow.webContents.on('render-process-gone', function () {})
 
 	// Emitted when the web page becomes unresponsive.
 	mainWindow.on('unresponsive', function () {})
@@ -56,10 +47,18 @@ function createMainWindow() {
 	mainWindow.on('leave-full-screen', function () {})
 }
 
-app.on('ready', createMainWindow);
+app.whenReady().then(() => {
+	createMainWindow()
+
+	app.on('activate', () => {
+		if (BrowserWindow.getAllWindows().length === 0) {
+			createWindow()
+		}
+	})
+})
 
 app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') {
-		app.quit();
+		app.quit()
 	}
 });

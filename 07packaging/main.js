@@ -1,18 +1,16 @@
-'use strict';
-const electron = require('electron');
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
-const Menu = electron.Menu;
+const { app, BrowserWindow, Menu, dialog } = require('electron')
+const path = require('path')
 
 let mainWindow;
 
 function createMainWindow() {
 	mainWindow = new BrowserWindow({
-		width: 600,
-		height: 400
+		width: 800,
+		height: 600,
+		webPreferences: { nodeIntegration: true, contextIsolation: false, preload: path.join(__dirname, 'preload.js') }
 	});
 
-	mainWindow.loadURL(`file://${__dirname}/index.html`);
+	mainWindow.loadFile('index.html');
 
 	let settingsWindow;
 
@@ -27,7 +25,7 @@ function createMainWindow() {
 				label: 'Open',
 				accelerator: 'CmdOrCtrl+O',
 				click: () => {
-					electron.dialog.showOpenDialog({
+					dialog.showOpenDialog({
 						properties: ['openFile', 'openDirectory', 'multiSelections']
 					});
 				}
@@ -44,8 +42,8 @@ function createMainWindow() {
 						height: 150,
 						width: 400
 					}
-					settingsWindow = new BrowserWindow(params)
-					settingsWindow.loadURL('file://' + __dirname + '/settings.html')
+					settingsWindow = new BrowserWindow(params);
+					settingsWindow.loadFile('settings.html');
 				}
 			},
 			{
@@ -131,7 +129,7 @@ function createMainWindow() {
 	// Calling event.preventDefault() will cancel the close.
 	mainWindow.webContents.on('close', function () {})
 
-	mainWindow.webContents.on('crashed', function () {})
+	mainWindow.webContents.on('render-process-gone', function () {})
 
 	// Emitted when the web page becomes unresponsive.
 	mainWindow.on('unresponsive', function () {})
@@ -161,10 +159,18 @@ function createMainWindow() {
 	mainWindow.on('leave-full-screen', function () {})
 }
 
-app.on('ready', createMainWindow);
+app.whenReady().then(() => {
+	createMainWindow()
+
+	app.on('activate', () => {
+		if (BrowserWindow.getAllWindows().length === 0) {
+			createWindow()
+		}
+	})
+})
 
 app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') {
-		app.quit();
+		app.quit()
 	}
 });
