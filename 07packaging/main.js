@@ -15,7 +15,7 @@ function createMainWindow() {
 	let settingsWindow;
 
 	var application_menu = [{
-		label: 'menu1',
+		label: 'Menu',
 		submenu: [{
 				label: 'Undo',
 				accelerator: 'CmdOrCtrl+Z',
