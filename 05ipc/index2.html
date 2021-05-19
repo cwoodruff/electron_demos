@@ -8,7 +8,8 @@
 <body>
     <h1>IPC Remote</h1>
     <script>
-        const ipcRenderer = require('electron').ipcRenderer;
+        const { ipcRenderer } = require('electron');
+
         ipcRenderer.send('asynchronous-message', 'Hello from Remote Window on Start!');
         function sendMessage() {
             ipcRenderer.send('asynchronous-message', 'Hello from Remote Window!!');
@@ -19,10 +20,14 @@
         ipcRenderer.on('asynchronous-reply', function(event, arg) {
             console.log(arg);
         });
+        ipcRenderer.on('action-update-label', (event, arg) => {
+            alert("Received message from Main Window!");
+            console.log(arg);
+        });
     </script>
-    <input value="Send Message" type="submit" onclick="sendMessage();"></input>
+    <input value="Send Message" type="submit" onclick="sendMessage();"/>
     <br/>
-    <input value="Close App" type="submit" onclick="closeApp();"></input>
+    <input value="Close App" type="submit" onclick="closeApp();"/>
 </body>
 
 </html>

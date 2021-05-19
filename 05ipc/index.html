@@ -13,9 +13,13 @@
 
         <script>
             const ipcRenderer = require('electron').ipcRenderer;
+
             ipcRenderer.send('asynchronous-message', 'Hello from Main Window on Start!');
             function sendMessage() {
                 ipcRenderer.send('asynchronous-message', 'Hello from Main Window!!');
+            }
+            function sendMessageToRemoteWindow() {
+                ipcRenderer.send('request-update-label-in-remote-window', 'Message from Main Window to Remote Window!');
             }
             ipcRenderer.on('asynchronous-reply', (event, args) => {
                 console.log({event, args});
@@ -23,9 +27,17 @@
             function closeApp() {
                 ipcRenderer.send('close-main-window');
             }
+
+            let Data = {
+                message: "Hello World !"
+            };
+
+
         </script>
-        <input value="Send Message" type="submit" onclick="sendMessage();"></input>
+        <input value="Send Message" type="submit" onclick="sendMessage();"/>
         <br/>
-        <input value="Close App" type="submit" onclick="closeApp();"></input>
+        <input value="Send Message to Remote Window" type="submit" onclick="sendMessageToRemoteWindow();"/>
+        <br/>
+        <input value="Close App" type="submit" onclick="closeApp();"/>
     </body>
 </html>

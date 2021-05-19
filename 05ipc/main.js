@@ -159,7 +159,8 @@ function createMainWindow() {
 
 	remoteWindow = new BrowserWindow({
 			width: 600,
-			height: 400
+			height: 400,
+			webPreferences: { nodeIntegration: true, contextIsolation: false }
 		});
 
 		remoteWindow.webContents.openDevTools();
@@ -182,6 +183,10 @@ ipcMain.on('synchronous-message', function(event, args) {
 ipcMain.on('close-main-window', function (event, arg) {
     console.log("Close App");
     app.quit();
+});
+
+ipcMain.on('request-update-label-in-remote-window', (event, arg) => {
+	remoteWindow.webContents.send('action-update-label', arg);
 });
 
 app.whenReady().then(() => {
