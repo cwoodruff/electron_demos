@@ -9,6 +9,6 @@
     "author": "cwoodruff",
     "license": "MIT",
     "devDependencies": {
-        "electron": "^12.0.7"
+        "electron": "^18.3.7"
     }
 }
