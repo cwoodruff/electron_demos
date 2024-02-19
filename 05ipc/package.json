@@ -6,7 +6,7 @@
   "license": "MIT",
   "devDependencies": {
     "devtron": "^1.4.0",
-    "electron": "^22.0.0"
+    "electron": "^28.2.3"
   },
   "dependencies": {
     "opn": "^6.0.0"
