@@ -1,0 +1,14 @@
+{
+    "name": "electron-menus-demo",
+    "version": "0.1.0",
+    "main": "main.js",
+    "author": "cwoodruff",
+    "license": "MIT",
+    "scripts": {
+        "start": "electron ."
+    },
+    "devDependencies": {
+        "electron": "^28.2.3",
+        "@electron/remote": "^2.1.2"
+    }
+}

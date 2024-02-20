@@ -1,0 +1,15 @@
+{
+    "name": "electron-menus-demo",
+    "version": "0.1.0",
+    "main": "main.js",
+    "author": "cwoodruff",
+    "license": "MIT",
+    "scripts": {
+        "start": "electron ."
+    },
+    "devDependencies": {
+        "electron": "^28.2.3",
+        "electron-reload": "^1.5.0",
+        "electron-reloader": "^1.2.3"
+    }
+}

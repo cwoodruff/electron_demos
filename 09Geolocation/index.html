@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Electron Menus Demo</title>
+        <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    </head>
+    <body>
+        <h1>Electron Menus Demo</h1>
+        <p>Node.js version <script>document.write(process.versions.node)</script></p>
+        <p>Chrome version <script>document.write(process.versions.chrome)</script></p>
+        <p>Electron version <script>document.write(process.versions.electron)</script></p>
+
+        <h3>
+            Language and Country Information in Electron
+        </h3>
+        <button id="detect">
+            Detect Information in Electron
+        </button>
+
+        <!-- Adding Individual Renderer Process JS File -->
+        <script src="index.js"></script>
+    </body>
+</html>
