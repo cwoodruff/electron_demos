@@ -1,6 +1,8 @@
 using ElectronNET.API;
 using ElectronNET.API.Entities;
 
+namespace electron.weather;
+
 static class InfoDialogListener
 {
     public static void SetupInfoDialogListener()

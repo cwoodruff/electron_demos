@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ClassLibrary;
+using Microsoft.AspNetCore.Mvc;
 
-namespace electron.net_react.Controllers;
+namespace electron.weather.Controllers;
 
 [ApiController]
 [Route("[controller]")]

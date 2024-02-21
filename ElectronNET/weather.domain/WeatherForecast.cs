@@ -1,4 +1,4 @@
-namespace electron.net_react;
+namespace ClassLibrary;
 
 public class WeatherForecast
 {
