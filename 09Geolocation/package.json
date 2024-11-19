@@ -8,7 +8,7 @@
         "start": "electron ."
     },
     "devDependencies": {
-        "axios": "^1.6.7",
+        "axios": "^1.7.4",
         "electron": "^28.2.3"
     }
 }
